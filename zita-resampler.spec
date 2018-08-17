@@ -1,11 +1,11 @@
 Summary:	C++ library for sample rate conversion of audio signals
 Name:		zita-resampler
-Version:	1.3.0
+Version:	1.6.0
 Release:	1
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://kokkinizita.linuxaudio.org/linuxaudio/downloads/%{name}-%{version}.tar.bz2
-# Source0-md5:	74c12e2280008f63ac9f2670fe4cf79b
+# Source0-md5:	7b5ddc42f210985b29c8769111217e4c
 URL:		http://kokkinizita.linuxaudio.org/linuxaudio/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
