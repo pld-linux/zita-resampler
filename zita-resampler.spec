@@ -1,15 +1,23 @@
+#
+# Conditional build:
+%bcond_with	sse2	# SSE2 support
+
+%ifarch %{x8664} x32
+%define	with_sse2	1
+%endif
 Summary:	C++ library for sample rate conversion of audio signals
 Summary(pl.UTF-8):	Biblioteka C++ do konwersji szybkości próbkowania sygnałów dźwiękowych
 Name:		zita-resampler
-Version:	1.6.2
+Version:	1.8.0
 Release:	1
 License:	GPL v3+
 Group:		Libraries
 Source0:	http://kokkinizita.linuxaudio.org/linuxaudio/downloads/%{name}-%{version}.tar.bz2
-# Source0-md5:	9b2cff7fa419febbca3a13435b2a24b3
+# Source0-md5:	48071a4449820768fa45fd41cded69fa
 URL:		http://kokkinizita.linuxaudio.org/linuxaudio/
 BuildRequires:	libsndfile-devel
 BuildRequires:	libstdc++-devel
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -48,18 +56,23 @@ Przykładowe aplikacje wykorzystujące bibliotekę %{name}.
 %prep
 %setup -q
 
+%if %{without sse2}
+%{__sed} -i -e '/-DENABLE_SSE2/d' source/Makefile
+%endif
+
 %build
 CPPFLAGS="%{rpmcppflags}" \
 LDFLAGS="%{rpmldflags}" \
 %{__make} -C source \
 	CXX="%{__cxx}" \
-	CXXFLAGS="%{rpmcxxflags} -fPIC -Wall -ffast-math"
+	CXXFLAGS="%{rpmcxxflags} -fPIC -Wall -ffast-math%{?with_sse2: -msse2}"
 
 ln -s "$(basename source/libzita-resampler.so.*.*.*)" source/libzita-resampler.so
 
 CPPFLAGS="-I../source %{rpmcppflags}" \
 LDFLAGS="-L../source %{rpmldflags}" \
 %{__make} -C apps \
+	CXX="%{__cxx}" \
 	CXXFLAGS="%{rpmcxxflags} -Wall -ffast-math"
 
 %install
