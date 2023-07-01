@@ -8,16 +8,18 @@
 Summary:	C++ library for sample rate conversion of audio signals
 Summary(pl.UTF-8):	Biblioteka C++ do konwersji szybkości próbkowania sygnałów dźwiękowych
 Name:		zita-resampler
-Version:	1.8.0
+Version:	1.10.1
 Release:	1
 License:	GPL v3+
 Group:		Libraries
-Source0:	http://kokkinizita.linuxaudio.org/linuxaudio/downloads/%{name}-%{version}.tar.bz2
-# Source0-md5:	48071a4449820768fa45fd41cded69fa
+Source0:	http://kokkinizita.linuxaudio.org/linuxaudio/downloads/%{name}-%{version}.tar.xz
+# Source0-md5:	3d83f911df11420cfc00811885b7c07d
 URL:		http://kokkinizita.linuxaudio.org/linuxaudio/
 BuildRequires:	libsndfile-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
